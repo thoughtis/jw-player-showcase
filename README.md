@@ -29,14 +29,14 @@ The plugin creates three routes within the WordPress using `add_rewrite_rule()`
 
 ### 404s
 
-- If a video or playlist is not during the `template_redirect` action, a 404 is returned and the request is redirected to the 404 template.
+- If a video or playlist is not found during the `template_redirect` action, a 404 is returned and the request is redirected to the 404 template.
 - If the config is not found or fails, the `/videos` route will still render, but with an empty array of playlists.
 
 ## API Interactions and Caching
 
 ### Config
 
-- Both playlists and video depend on successful retrieval of the config file. It contains a list of playlists to display at the `/video` route.
+- Both playlists and video depend on successful retrieval of the config file. It contains a list of playlists to display at the `/videos` route.
 - Config is cached for 1 hour
 
 ### Playlists
