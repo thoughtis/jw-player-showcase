@@ -1,0 +1,12 @@
+{
+    "name": "thoughtis/jw-player-showcase",
+    "description": "Port of JW Player Showcase as a WordPress plugin",
+    "type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "thoughtis",
+            "email": "jobs@thought.is"
+        }
+    ],
+    "require": {}
+}
