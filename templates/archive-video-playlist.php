@@ -16,21 +16,37 @@ $playlist 	= JW_Showcase\get_playlist( $paylist_id );
 
 <?php if ( ! empty( $playlist->playlist ) ) : ?>
 
-<h3>Videos</h3>
+<?php $video = $playlist->playlist[0]; ?>
 
-<ul>
+<div class="jw-player-showcase-wrapper">
+	<div class="jw-player-showcase" id="jw-player-showcase" data-video="<?php echo esc_attr( wp_json_encode( $video ) ); ?>">
+		<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
+	</div>
+</div>
 
-<?php foreach ( $playlist->playlist as $video ) : ?>
+<?php endif; ?>
 
-	<li>
-		<a href="<?php echo esc_url( home_url( '/video/' . $video->mediaid ) ); ?>">
-			<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
-		</a>
-	</li>
+<?php if ( 1 < count( $playlist->playlist ) ) : ?>
 
-<?php endforeach; ?>
+<div class="jw-player-showcase-wrapper">
 
-</ul>
+	<h3>All Videos</h3>
+
+	<ul class="jw-player-showcase-playlist">
+
+	<?php foreach ( $playlist->playlist as $video ) : ?>
+
+		<li class="jw-player-showcase-playlist-item">
+			<a href="<?php echo esc_url( home_url( '/video/' . $video->mediaid ) ); ?>">
+				<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
+			</a>
+		</li>
+
+	<?php endforeach; ?>
+
+	</ul>
+
+</div>
 
 <?php endif; ?>
 

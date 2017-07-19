@@ -14,6 +14,10 @@ $video 		= JW_Showcase\get_video( $video_id );
 <h2><?php echo esc_html( $video->title ); ?></h2>
 <p><?php echo esc_html( $video->description ); ?></p>
 
-<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
+<div class="jw-player-showcase-wrapper">
+	<div class="jw-player-showcase" id="jw-player-showcase" data-video="<?php echo esc_attr( wp_json_encode( $video ) ); ?>">
+		<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
+	</div>
+</div>
 
 <?php get_footer();
