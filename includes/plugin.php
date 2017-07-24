@@ -121,6 +121,17 @@ add_action( 'template_redirect', function() {
 });
 
 /**
+ * Is Video ?
+ * @return boolean
+ */
+
+function is_video() {
+
+	return 'videos' === get_query_var( 'section' );
+
+}
+
+/**
  * Add Player Javascript using defer
  */
 
