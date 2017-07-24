@@ -1,0 +1,32 @@
+/**
+ * JW Player Showcase
+ */
+
+.jw-player-showcase-wrapper{
+
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 0.5em;
+
+}
+
+.jw-player-showcase-playlist{
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: repeat( auto-fit, minmax( 300px, 1fr ) );
+  grid-template-rows: auto;
+
+}
+
+.jw-player-showcase-playlist-item{
+
+  margin: 0;
+  padding: 0;
+
+}
