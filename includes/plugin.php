@@ -119,3 +119,23 @@ add_action( 'template_redirect', function() {
 	}
 
 });
+
+/**
+ * Add Player Javascript using defer
+ */
+
+add_action( 'wp_footer', function() {
+
+	if ( true !== is_video() ) {
+		return;
+	}
+
+	$config = JW_Showcase\get_config();
+
+	?>
+
+	<script src="<?php echo esc_url( "https://content.jwplatform.com/libraries/{$config->player}.js" ); ?>" defer="true"></script>
+
+	<?php
+
+} );
