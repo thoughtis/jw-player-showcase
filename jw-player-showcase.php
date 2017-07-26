@@ -21,9 +21,9 @@ if ( defined( 'JWPLAYER_PLUGIN_VERSION' ) && defined( 'JW_SHOWCASE_CONFIG_URL' )
 
 	add_action( 'wp_enqueue_scripts', function() {
 
-		wp_enqueue_script( 'jw-player-showcase', plugin_dir_url( __FILE__ ) . 'assets/jw-player-showcase.js', array(), '1.0.0', true );
+		wp_enqueue_script( 'jw-player-showcase', plugin_dir_url( __FILE__ ) . 'assets/js/build.js', array(), '1.0.0', true );
 
-		wp_enqueue_style( 'jw-player-showcase', plugin_dir_url( __FILE__ ) . 'assets/jw-player-showcase.css', array(), '1.0.0', 'screen' );
+		wp_enqueue_style( 'jw-player-showcase', plugin_dir_url( __FILE__ ) . 'assets/css/app.css', array(), '1.0.0', 'screen' );
 
 	});
 
