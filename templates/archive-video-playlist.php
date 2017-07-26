@@ -37,7 +37,7 @@ $playlist 	= JW_Showcase\get_playlist( $paylist_id );
 	<?php foreach ( $playlist->playlist as $video ) : ?>
 
 		<li class="jw-player-showcase-playlist-item">
-			<a href="<?php echo esc_url( home_url( '/video/' . $video->mediaid ) ); ?>">
+			<a href="<?php echo esc_url( home_url( '/playlist/' . $paylist_id . '/video/' . $video->mediaid ) ); ?>">
 				<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
 			</a>
 		</li>
