@@ -10,7 +10,7 @@ add_action( 'init', function() {
 
 	add_rewrite_rule( 'playlist/([^/]+)/?$', 'index.php?section=videos&playlist=$matches[1]', 'top' );
 
-	add_rewrite_rule( 'video/([^/]+)/?$', 'index.php?section=videos&video=$matches[1]', 'top' );
+	add_rewrite_rule( 'playlist/([^/]+)/video/([^/]+)/?$', 'index.php?section=videos&playlist=$matches[1]&video=$matches[2]', 'top' );
 
 });
 
@@ -63,7 +63,7 @@ add_filter( 'template_include', function( $template ) {
 	}
 
 	// Playlist
-	if ( ! empty( $playlist ) ) {
+	if ( ! empty( $playlist ) && '' === $video ) {
 		return apply_filters( 'jwshowcase_playlist_template', $playlist_template );
 	}
 
@@ -99,7 +99,7 @@ add_action( 'template_redirect', function() {
 	}
 
 	// Playlist
-	if ( '' !== $playlist ) {
+	if ( '' !== $playlist && '' === $video ) {
 
 		if ( ! JW_Showcase\get_playlist() ) {
 
@@ -109,9 +109,9 @@ add_action( 'template_redirect', function() {
 	}
 
 	// Video
-	if ( '' !== $video ) {
+	if ( '' !== $playlist && '' !== $video ) {
 
-		if ( ! JW_Showcase\get_video() ) {
+		if ( ! JW_Showcase\get_playlist() || ! JW_Showcase\get_video() ) {
 
 			return do_404();
 
