@@ -13,26 +13,26 @@ $playlists 	= JW_Showcase\get_playlists();
 <?php if ( ! empty( $playlists ) ) : ?>
 
 <h3>Playlists</h3>
-<div class="jwp-showcase-playlists">
+<div>
 	<?php foreach ( $playlists as $playlist ) : ?>
 	
 		<div>
 			<a href="<?php echo esc_url( home_url( '/playlist/' . $playlist->feedid ) ); ?>"><?php echo esc_html( $playlist->title ); ?></a>
 		</div>
 		<div class="jw-player-showcase-playlist-container">
-			<ul class="jw-player-showcase-playlist">
+			<div class="jw-player-showcase-playlist">
 
 			<?php foreach ( $playlist->playlist as $video ) : ?>
 
-			<li class="jw-player-showcase-playlist-item">
+			<div class="jw-player-showcase-playlist-item">
 				<a href="<?php echo esc_url( home_url( '/playlist/' . $playlist->feedid . '/video/' . $video->mediaid ) ); ?>">
 					<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
 				</a>
-			</li>
+			</div>
 
 			<?php endforeach; ?>
 
-			</ul>
+			</div>
 		</div>
 
 	<?php endforeach; ?>

@@ -18,6 +18,7 @@ function compile(watch) {
 	var bundler = watchify(
 		browserify('./lib/js/index.js', { debug: true })
 			.transform(babel, {presets: ["es2015"]})
+			.transform('browserify-shim', {global: true})
 		);
 
 	function rebundle() {
@@ -59,5 +60,5 @@ gulp.task('sass', function () {
 });
 
 gulp.task('sass:watch', function () {
-  gulp.watch('./lib/scss/app.scss', ['sass']);
+  gulp.watch('./lib/scss/*.scss', ['sass']);
 });
