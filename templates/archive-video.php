@@ -14,8 +14,20 @@ $playlists 	= JW_Showcase\get_playlists();
 
 <h3>Playlists</h3>
 <div>
+	<?php if ( ! empty( $playlists[0] ) ) : ?>
+
+		<?php $video = $playlists[0]->playlist[0]; ?>
+
+		<div class="jw-player-showcase-wrapper">
+			<div class="jw-player-showcase" id="jw-player-showcase" data-video="<?php echo esc_attr( wp_json_encode( $video ) ); ?>">
+				<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
+			</div>
+		</div>
+
+	<?php endif; ?>
+
 	<?php foreach ( $playlists as $playlist ) : ?>
-	
+
 		<div>
 			<a href="<?php echo esc_url( home_url( '/playlist/' . $playlist->feedid ) ); ?>"><?php echo esc_html( $playlist->title ); ?></a>
 		</div>
