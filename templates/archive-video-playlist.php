@@ -32,19 +32,19 @@ $playlist 	= JW_Showcase\get_playlist( $paylist_id );
 
 	<h3>All Videos</h3>
 
-	<ul class="jw-player-showcase-playlist">
+	<div class="jw-player-showcase-playlist">
 
 	<?php foreach ( $playlist->playlist as $video ) : ?>
 
-		<li class="jw-player-showcase-playlist-item">
+		<div class="jw-player-showcase-playlist-item">
 			<a href="<?php echo esc_url( home_url( '/playlist/' . $paylist_id . '/video/' . $video->mediaid ) ); ?>">
 				<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
 			</a>
-		</li>
+		</div>
 
 	<?php endforeach; ?>
 
-	</ul>
+	</div>
 
 </div>
 
