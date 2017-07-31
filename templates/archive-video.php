@@ -20,11 +20,11 @@ $playlists 	= JW_Showcase\get_playlists();
 			<a href="<?php echo esc_url( home_url( '/playlist/' . $playlist->feedid ) ); ?>"><?php echo esc_html( $playlist->title ); ?></a>
 		</div>
 		<div class="jw-player-showcase-playlist-container">
-			<ul class="jw-player-showcase-playlist jwp-showcase-carousel">
+			<ul class="jw-player-showcase-playlist">
 
 			<?php foreach ( $playlist->playlist as $video ) : ?>
 
-			<li class="jw-player-showcase-playlist-item jwp-showcase-carousel-seat">
+			<li class="jw-player-showcase-playlist-item">
 				<a href="<?php echo esc_url( home_url( '/playlist/' . $playlist->feedid . '/video/' . $video->mediaid ) ); ?>">
 					<img src="<?php echo esc_url( $video->image ); ?>" alt="<?php echo esc_attr( $video->title ); ?>" />
 				</a>
