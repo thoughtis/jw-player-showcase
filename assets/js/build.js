@@ -58,7 +58,8 @@ function init_carousel() {
 				slidesToShow: 1,
 				slidesToScroll: 1,
 				swipeToSlide: true,
-				arrows: false
+				arrows: false,
+				adaptiveHeight: true
 			}
 		}]
 	});
