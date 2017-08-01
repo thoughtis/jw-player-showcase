@@ -9,7 +9,7 @@ namespace JW_Showcase;
 
 function enqueue_assets() {
 
-	wp_enqueue_script( 'jw-player-showcase', JWSHOWCASE_PLUGIN_URL . 'assets/js/build.js', array(), '1.0.2', true );
+	wp_enqueue_script( 'jw-player-showcase', JWSHOWCASE_PLUGIN_URL . 'assets/js/build.js', array(), '1.0.0', true );
 
 	wp_enqueue_style( 'jw-player-showcase', JWSHOWCASE_PLUGIN_URL . 'assets/css/app.css', array(), '1.0.0', 'screen' );
 
