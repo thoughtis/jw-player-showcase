@@ -6,7 +6,7 @@ var gulp 		= require('gulp'),
 	watchify 	= require('watchify'),
 	babel 		= require('babelify'),
 	sass 		= require('gulp-sass'),
-	cssnano 	= require( 'gulp-cssnano' ),
+	cssnano 	= require('gulp-cssnano'),
 	cssbyebye 	= require('css-byebye')
 ;
 
