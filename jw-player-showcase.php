@@ -1,11 +1,17 @@
 <?php
 /*
-Plugin Name: JW Player Video Page
+Plugin Name: JW Player Showcase
 Plugin URI: https://github.com/thoughtis/jw-player-showcase
 Description: Use JW Player's APIs to create a server side rendered version of the JW Showcase
 Author: Thought.is
-Version: 1.0.0
+Author URI: https://developer.wordpress.org/
+License: GPL2
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
+
+if ( ! defined( 'WPINC' ) ) {
+	exit;
+}
 
 if ( defined( 'JW_SHOWCASE_CONFIG_URL' ) && function_exists( 'wpcom_vip_file_get_contents' ) ) {
 
