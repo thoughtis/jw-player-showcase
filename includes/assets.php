@@ -9,9 +9,9 @@ namespace JW_Showcase;
 
 function enqueue_assets() {
 
-	wp_enqueue_script( 'jw-player-showcase', JWSHOWCASE_PLUGIN_URL . 'assets/js/build.js', array(), '1.0.0', true );
+	wp_enqueue_script( 'jw-player-showcase', JWSHOWCASE_PLUGIN_URL . 'public/js/build.js', array(), '1.0.0', true );
 
-	wp_enqueue_style( 'jw-player-showcase', JWSHOWCASE_PLUGIN_URL . 'assets/css/app.css', array(), '1.0.0', 'screen' );
+	wp_enqueue_style( 'jw-player-showcase', JWSHOWCASE_PLUGIN_URL . 'public/css/app.css', array(), '1.0.0', 'screen' );
 
 }
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );

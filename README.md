@@ -23,7 +23,7 @@ The plugin creates three routes within the WordPress using `add_rewrite_rule()`
 
 - `/videos`
 - `/playlist/%playlist-id%`
-- `/video/%video-id%`
+- `/playlist/%playlist-id%/video/%video-id%`
 
 ### 404s
 
@@ -47,7 +47,17 @@ The plugin creates three routes within the WordPress using `add_rewrite_rule()`
 - Videos requests are cached for 6-7 hours.
 - Only the video->playlist[0] portion of the video API response is cached because it is identical to the video object in the playlist API response. As a result the `feed_instance_id` and `kind` fields are not present.
 
-## Templates
+## Front-End
+
+### Javascript
+
+We use [Slick](https://kenwheeler.github.io/slick/) to display playlists as carousels.
+
+### CSS
+
+A bare minimum of CSS is provided. Any theme using this plugin should extend the styling to match their local templates.
+
+### Templates
 
 The plugin contains a default template for each route. They provide barebones support, and are intended as examples for how to structure your own templates.
 
