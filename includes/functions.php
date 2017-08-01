@@ -2,14 +2,43 @@
 
 namespace JW_Showcase;
 
-use Exception;
+use WP_Error;
 
-$request_cache = array(
+/**
+ * Do 404
+ */
 
-	'video' 	=> array(),
-	'playlist' 	=> array(),
+function do_404() {
 
-);
+	global $wp_query;
+
+	$wp_query->set_404();
+
+	status_header( 404 );
+
+	get_template_part( '404' );
+
+	exit();
+
+}
+
+/**
+ * Is Video?
+ * @return boolean
+ */
+
+function is_video() {
+
+	return 'videos' === get_query_var( 'section' );
+
+}
+
+/**
+ * Get Config
+ * Request the JSON configuration file from JW Player
+ *
+ * @return mixed object|boolean
+ */
 
 function get_config() {
 
@@ -33,87 +62,56 @@ function get_config() {
 
 }
 
+/**
+ * Get Playlist ID
+ *
+ * @return string
+ */
+
 function get_playlist_id() {
 
 	return get_query_var( 'playlist' );
 
 }
 
+/**
+ * Get Playlist
+ *
+ * @return object|boolean
+ */
+
 function get_playlist( $id = null ) {
 
-	global $request_cache;
-
+	// Use ID if provided
 	if ( null === $id ) {
 
+		// Otherwise get it from WP Request
 		$id = get_playlist_id();
 
 	}
 
+	// ID Required
 	if ( '' === $id ) {
 
 		return false;
 
 	}
 
-	// request cache
-	if ( true === isset( $request_cache['playlist'][ $id ] ) ) {
+	$playlist = new Playlist_Request( $id, 'v2/playlists', 'playlist' );
 
-		return $request_cache['playlist'][ $id ];
-
-	}
-
-	// object cache
-	$cached_version = wp_cache_get( $id, 'jw_player_showcase_playlists' );
-
-	if ( false !== $cached_version ) {
-
-		$request_cache['playlist'][ $id ] = $cached_version;
-
-		return $cached_version;
-
-	}
-
-	$url = "https://cdn.jwplayer.com/v2/playlists/{$id}";
-
-	$request = wpcom_vip_file_get_contents( $url, 3, 900 );
-
-	if ( true !== is_string( $request ) ) {
+	if ( true === is_wp_error( $playlist->request() ) ) {
 
 		return false;
 
 	}
 
-	$request = json_decode( $request );
-
-	if ( true !== is_object( $request ) || true !== property_exists( $request, 'playlist' ) ) {
-
-		return false;
-
-	}
-
-	// Use random expiration so they don't all uncache at once.
-	$exp = ( HOUR_IN_SECONDS * 6 ) + rand( MINUTE_IN_SECONDS, HOUR_IN_SECONDS );
-
-	$request_cache['playlist'][ $id ] = $request;
-
-	// cache playlist
-	wp_cache_set( $id, $request, 'jw_player_showcase_playlists', $exp );
-
-	// cache videos in playlist
-	foreach ( $request->playlist as $video ) {
-
-		$exp = ( HOUR_IN_SECONDS * 6 ) + rand( MINUTE_IN_SECONDS, HOUR_IN_SECONDS );
-
-		wp_cache_set( $video->mediaid, $video, 'jw_player_showcase_videos', $exp );
-
-	}
-
-	return $request;
+	return $playlist->data;
 
 }
 
 /**
  * Get Playlists
+ *
  * @param object $config
  */
 
@@ -121,8 +119,10 @@ function get_playlists( $config = null ) {
 
 	$playlists = array();
 
+	// Use config if provided
 	if ( null === $config ) {
 
+		// Otherwise get from WP Request
 		$config = get_config();
 
 	}
@@ -135,7 +135,7 @@ function get_playlists( $config = null ) {
 
 	if ( property_exists( $config, 'featuredPlaylist' ) && is_string( $config->featuredPlaylist ) ) {
 
-		$config->playlists[] = $config->featuredPlaylist;
+		array_unshift( $config->playlists, $config->featuredPlaylist );
 
 	}
 
@@ -151,69 +151,38 @@ function get_video_id() {
 
 }
 
+/**
+ * Get Video
+ *
+ * @param 	string|null 	$id
+ * @return 	object|boolean
+ */
+
 function get_video( $id = null ) {
 
-	global $request_cache;
-
+	// Use ID if provided
 	if ( null === $id ) {
 
+		// Otherwise get from WP Request
 		$id = get_video_id();
 
 	}
 
+	// Require ID
 	if ( '' === $id ) {
 
 		return false;
 
 	}
 
-	// request cache
+	$video = new Media_Request( $id, 'v2/media', 'media' );
 
-	if ( true === isset( $request_cache['video'][ $id ] ) ) {
-
-		return $request_cache['video'][ $id ];
-
-	}
-
-	// object cache
-
-	$cached_version = wp_cache_get( $id, 'jw_player_showcase_videos' );
-
-	if ( false !== $cached_version ) {
-
-		$request_cache['video'][ $id ] = $cached_version;
-
-		return $cached_version;
-
-	}
-
-	$url = "https://cdn.jwplayer.com/v2/media/{$id}";
-
-	$request = wpcom_vip_file_get_contents( $url, 3, 900 );
-
-	if ( true !== is_string( $request ) ) {
+	if ( true === is_wp_error( $video->request() ) ) {
 
 		return false;
 
 	}
 
-	$request = json_decode( $request );
-
-	if ( true !== is_object( $request ) || true !== property_exists( $request, 'playlist' ) ) {
-
-		return false;
-
-	}
-
-	$video = $request->playlist[0];
-
-	$request_cache['video'][ $id ] = $video;
-
-	// Use random expiration so they don't all uncache at once.
-	$exp = ( HOUR_IN_SECONDS * 6 ) + rand( MINUTE_IN_SECONDS, HOUR_IN_SECONDS );
-
-	wp_cache_set( $id, $video, 'jw_player_showcase_videos', $exp );
-
-	return $video;
+	return $video->data;
 
 }

@@ -7,24 +7,17 @@ Author: Thought.is
 Version: 1.0.0
 */
 
-/**
- * Requires the existing JW Player Plugin
- * Developed with version 1.5.1
- */
-
-if ( defined( 'JWPLAYER_PLUGIN_VERSION' ) && defined( 'JW_SHOWCASE_CONFIG_URL' ) ) {
+if ( defined( 'JW_SHOWCASE_CONFIG_URL' ) && function_exists( 'wpcom_vip_file_get_contents' ) ) {
 
 	define( 'JWSHOWCASE_PLUGIN_DIR', dirname( __FILE__ ) );
+	define( 'JWSHOWCASE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+	require_once( __DIR__ . '/includes/class-request-cache.php' );
+	require_once( __DIR__ . '/includes/class-media-request.php' );
+	require_once( __DIR__ . '/includes/class-playlist-request.php' );
 
 	require_once( __DIR__ . '/includes/functions.php' );
-	require_once( __DIR__ . '/includes/plugin.php' );
-
-	add_action( 'wp_enqueue_scripts', function() {
-
-		wp_enqueue_script( 'jw-player-showcase', plugin_dir_url( __FILE__ ) . 'assets/js/build.js', array(), '1.0.0', true );
-
-		wp_enqueue_style( 'jw-player-showcase', plugin_dir_url( __FILE__ ) . 'assets/css/app.css', array(), '1.0.0', 'screen' );
-
-	});
+	require_once( __DIR__ . '/includes/routing.php' );
+	require_once( __DIR__ . '/includes/assets.php' );
 
 }

@@ -1,10 +1,12 @@
 <?php
 
+namespace JW_Showcase;
+
 /**
  * Rewrites
  */
 
-add_action( 'init', function() {
+function init() {
 
 	add_rewrite_rule( 'videos', 'index.php?section=videos', 'top' );
 
@@ -12,12 +14,14 @@ add_action( 'init', function() {
 
 	add_rewrite_rule( 'playlist/([^/]+)/video/([^/]+)/?$', 'index.php?section=videos&playlist=$matches[1]&video=$matches[2]', 'top' );
 
-});
+}
+add_filter( 'init', __NAMESPACE__ . '\\init' );
 
 /**
  * Query Vars
  */
-add_filter( 'query_vars', function( $vars ) {
+
+function query_vars( $vars ) {
 
 	if ( ! in_array( 'section', $vars, true ) ) {
 		$vars[] = 'section';
@@ -33,7 +37,8 @@ add_filter( 'query_vars', function( $vars ) {
 
 	return $vars;
 
-} );
+}
+add_filter( 'query_vars', __NAMESPACE__ . '\\query_vars', 10, 1 );
 
 /**
  * Template Includes
@@ -42,14 +47,14 @@ add_filter( 'query_vars', function( $vars ) {
  * @return string $template
  */
 
-add_filter( 'template_include', function( $template ) {
+function template_include( $template ) {
 
 	$section 	= get_query_var( 'section' );
 	$playlist 	= get_query_var( 'playlist' );
 	$video 		= get_query_var( 'video' );
 
 	// Not our section, move on
-	if ( 'videos' !== $section ) {
+	if ( true !== is_video() ) {
 		return $template;
 	}
 
@@ -70,26 +75,22 @@ add_filter( 'template_include', function( $template ) {
 	// Video
 	return apply_filters( 'jwshowcase_single_template', $single_template );
 
-});
-
-function do_404() {
-
-	global $wp_query;
-	$wp_query->set_404();
-	status_header( 404 );
-	get_template_part( 404 );
-	exit();
-
 }
+add_filter( 'template_include', __NAMESPACE__ . '\\template_include', 10, 1 );
 
-add_action( 'template_redirect', function() {
+/**
+ * Template Redirect
+ * Ensure content is available. If not, return 404.
+ */
+
+function template_redirect() {
 
 	$section 	= get_query_var( 'section' );
 	$playlist 	= get_query_var( 'playlist' );
 	$video 		= get_query_var( 'video' );
 
 	// Not our section, move on
-	if ( 'videos' !== $section ) {
+	if ( true !== is_video() ) {
 		return;
 	}
 
@@ -101,7 +102,7 @@ add_action( 'template_redirect', function() {
 	// Playlist
 	if ( '' !== $playlist && '' === $video ) {
 
-		if ( ! JW_Showcase\get_playlist() ) {
+		if ( ! get_playlist() ) {
 
 			return do_404();
 
@@ -111,42 +112,12 @@ add_action( 'template_redirect', function() {
 	// Video
 	if ( '' !== $playlist && '' !== $video ) {
 
-		if ( ! JW_Showcase\get_playlist() || ! JW_Showcase\get_video() ) {
+		if ( ! get_playlist() || ! get_video() ) {
 
 			return do_404();
 
 		}
 	}
 
-});
-
-/**
- * Is Video ?
- * @return boolean
- */
-
-function is_video() {
-
-	return 'videos' === get_query_var( 'section' );
-
 }
-
-/**
- * Add Player Javascript using defer
- */
-
-add_action( 'wp_footer', function() {
-
-	if ( true !== is_video() ) {
-		return;
-	}
-
-	$config = JW_Showcase\get_config();
-
-	?>
-
-	<script src="<?php echo esc_url( "https://content.jwplatform.com/libraries/{$config->player}.js" ); ?>" defer="true"></script>
-
-	<?php
-
-} );
+add_action( 'template_redirect', __NAMESPACE__ . '\\template_redirect' );
