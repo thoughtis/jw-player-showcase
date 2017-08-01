@@ -6,7 +6,8 @@ var gulp 		= require('gulp'),
 	watchify 	= require('watchify'),
 	babel 		= require('babelify'),
 	sass 		= require('gulp-sass'),
-	cssnano 	= require( 'gulp-cssnano' )
+	cssnano 	= require('gulp-cssnano'),
+	cssbyebye 	= require('css-byebye')
 ;
 
 var postcss      = require('gulp-postcss'),
@@ -18,6 +19,7 @@ function compile(watch) {
 	var bundler = watchify(
 		browserify('./lib/js/index.js', { debug: true })
 			.transform(babel, {presets: ["es2015"]})
+			.transform('browserify-shim', {global: true})
 		);
 
 	function rebundle() {
@@ -50,14 +52,19 @@ gulp.task('watch', ['sass:watch'], function() { return watch(); });
 gulp.task('default', ['watch', 'sass']);
 
 gulp.task('sass', function () {
+
+	var cbbOptions = {
+		rulesToRemove: [ '.slick-loading .slick-list' ]
+	}
+
   return gulp
 	.src('./lib/scss/app.scss')
 	.pipe( sass().on('error', sass.logError) )
-	.pipe( postcss([ autoprefixer(), flexbugfixes ]) )
+	.pipe( postcss([ autoprefixer(), flexbugfixes, cssbyebye( cbbOptions ) ] ) )
 	.pipe( cssnano( {safe:true} ) )
 	.pipe( gulp.dest( './assets/css' ) );
 });
 
 gulp.task('sass:watch', function () {
-  gulp.watch('./lib/scss/app.scss', ['sass']);
+  gulp.watch('./lib/scss/*.scss', ['sass']);
 });
