@@ -6,8 +6,6 @@ Converting the [JW Showcase](https://github.com/jwplayer/jw-showcase) Angular ap
 
 ## Requirements
 
-- Intended to compliment the existing JW Player WordPress plugin. It takes advantage of existing settings and constants.
-  - Developed with version 1.5.1, the latest currently available on WordPress VIP.
 - Uses WordPress VIP specific functions for external API requests and caching.
   - Will fail without these functions, but will fail early and silently.
 
