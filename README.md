@@ -1,7 +1,5 @@
 # JW Player Showcase as WordPress a VIP Plugin
 
-Converting the [JW Showcase](https://github.com/jwplayer/jw-showcase) Angular application into a plugin WordPress, specifically WordPress VIP.
-
 **NOTE: This repo is for development purposes. This plugin has not been submitted for WordPress review. It is not recommended for use.**
 
 ## Requirements
