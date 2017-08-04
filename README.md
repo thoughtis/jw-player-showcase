@@ -1,4 +1,4 @@
-# JW Player Showcase as WordPress a VIP Plugin
+# JW Player Showcase as a WordPress VIP Plugin
 
 **NOTE: This repo is for development purposes. This plugin has not been submitted for WordPress review. It is not recommended for use.**
 
