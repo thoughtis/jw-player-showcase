@@ -121,3 +121,17 @@ function template_redirect() {
 
 }
 add_action( 'template_redirect', __NAMESPACE__ . '\\template_redirect' );
+
+/**
+ * Pre Get Posts
+ * The query should not think that any video page is the homepage
+ */
+
+function pre_get_posts( $query ) {
+
+	if ( is_video() ) {
+		$query->is_home = false;
+	}
+
+}
+add_action( 'pre_get_posts',  __NAMESPACE__ . '\\pre_get_posts' );
