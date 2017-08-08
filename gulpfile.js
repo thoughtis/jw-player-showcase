@@ -1,8 +1,7 @@
 var gulp 		= require('gulp'),
-	sourcemaps 	= require('gulp-sourcemaps'),
 	source 		= require('vinyl-source-stream'),
 	buffer 		= require('vinyl-buffer'),
-	uglify 		= require( 'gulp-uglify' ),
+	uglify 		= require('gulp-uglify'),
 	browserify	= require('browserify'),
 	watchify 	= require('watchify'),
 	babel 		= require('babelify'),
@@ -29,8 +28,6 @@ function compile(watch) {
 			.pipe(source('build.js'))
 			.pipe(buffer())
 			.pipe(uglify())
-			.pipe(sourcemaps.init({ loadMaps: true }))
-			.pipe(sourcemaps.write('./'))
 			.pipe(gulp.dest('./public/js'));
 	}
 
