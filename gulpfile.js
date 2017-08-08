@@ -31,7 +31,7 @@ function compile(watch) {
 			.pipe(uglify())
 			.pipe(sourcemaps.init({ loadMaps: true }))
 			.pipe(sourcemaps.write('./'))
-			.pipe(gulp.dest('./assets/js'));
+			.pipe(gulp.dest('./public/js'));
 	}
 
 	if (watch) {
@@ -64,7 +64,7 @@ gulp.task('sass', function () {
 	.pipe( sass().on('error', sass.logError) )
 	.pipe( postcss([ autoprefixer(), flexbugfixes, cssbyebye( cbbOptions ) ] ) )
 	.pipe( cssnano( {safe:true} ) )
-	.pipe( gulp.dest( './assets/css' ) );
+	.pipe( gulp.dest( './public/css' ) );
 });
 
 gulp.task('sass:watch', function () {
