@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	exit;
 }
 
-if ( defined( 'JW_SHOWCASE_CONFIG_URL' ) && function_exists( 'wpcom_vip_file_get_contents' ) ) {
+if ( defined( 'JW_SHOWCASE_CONFIG_URL' ) ) {
 
 	define( 'JWSHOWCASE_PLUGIN_DIR', dirname( __FILE__ ) );
 	define( 'JWSHOWCASE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
