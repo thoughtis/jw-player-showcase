@@ -127,19 +127,15 @@ function get_playlists( $config = null ) {
 
 	}
 
-	if ( ! property_exists( $config, 'playlists' ) || ! is_array( $config->playlists ) ) {
+	$content = array();
 
-		$config->playlists = $playlists;
-
+	foreach ( $config->content as $value ) {
+		if ( true === property_exists( $value, 'playlistId' ) ) {
+			$content[] = $value->playlistId;
+		}
 	}
 
-	if ( property_exists( $config, 'featuredPlaylist' ) && is_string( $config->featuredPlaylist ) ) {
-
-		array_unshift( $config->playlists, $config->featuredPlaylist );
-
-	}
-
-	$playlists = array_map( __NAMESPACE__ . '\\get_playlist', $config->playlists );
+	$playlists = array_map( __NAMESPACE__ . '\\get_playlist', $content );
 
 	return $playlists;
 
